@@ -1,0 +1,274 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  overflow-x: hidden;
+}
+
+/* ========== VIEW TRANSITIONS ========== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+.dark::view-transition-old(root) {
+  z-index: 2;
+}
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #3F3F46; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #52525B; }
+
+/* ========== NAVBAR ========== */
+#navbar {
+  background: rgba(250, 250, 250, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E4E4E7;
+}
+.dark #navbar {
+  background: rgba(10, 10, 15, 0.8);
+  border-bottom-color: #27272A;
+}
+#navbar.scrolled {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.dark #navbar.scrolled {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes typing-caret {
+  0%, 100% { border-color: #2563EB; }
+  50% { border-color: transparent; }
+}
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-terminal-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ========== REVEAL ON SCROLL ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== TYPEWRITER ========== */
+.typewriter-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #2563EB;
+  animation: typewriter 2s steps(30) forwards, typing-caret 0.8s step-end infinite;
+  max-width: fit-content;
+}
+
+/* ========== SKILL BARS ========== */
+.skill-bar {
+  width: 100%;
+  height: 6px;
+  background: #E4E4E7;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.dark .skill-bar {
+  background: #27272A;
+}
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563EB, #60A5FA);
+  border-radius: 3px;
+  transition: width 1s ease-out;
+  width: 0%;
+}
+.skill-bar-fill.animate {
+  /* width is set via inline style, trigger animation */
+}
+
+/* ========== PARTICLE CANVAS ========== */
+#particle-canvas {
+  z-index: 0;
+}
+
+/* ========== THEME TRANSITION ========== */
+html {
+  transition: background-color 0.3s ease;
+}
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== HERO DECORATION ========== */
+.hero-decoration {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-orb {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbPulse 8s ease-in-out infinite alternate;
+}
+.shape {
+  position: absolute;
+  pointer-events: none;
+}
+.shape-circle {
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  border-radius: 50%;
+  top: -80px;
+  right: -60px;
+  animation: floatDrift 25s ease-in-out infinite;
+}
+.shape-square {
+  width: 120px;
+  height: 120px;
+  border: 2px solid rgba(37, 99, 235, 0.1);
+  border-radius: 24px;
+  bottom: 15%;
+  left: 5%;
+  transform: rotate(45deg);
+  animation: floatDrift 20s ease-in-out infinite reverse;
+}
+.shape-dot {
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.15);
+  animation: floatDot 6s ease-in-out infinite;
+}
+.shape-dot:nth-child(4) {
+  width: 6px;
+  height: 6px;
+  top: 25%;
+  left: 85%;
+}
+.shape-dot:nth-child(5) {
+  width: 10px;
+  height: 10px;
+  top: 70%;
+  left: 10%;
+  animation-delay: 2s;
+}
+.shape-dot:nth-child(6) {
+  width: 4px;
+  height: 4px;
+  top: 40%;
+  left: 75%;
+  animation-delay: 1s;
+}
+
+@keyframes orbPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.8; }
+}
+@keyframes floatDrift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -25px) rotate(3deg); }
+  66% { transform: translate(-15px, 15px) rotate(-2deg); }
+}
+@keyframes floatDot {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-20px); opacity: 1; }
+}
+
+/* ========== SKILL ICONS ========== */
+.skill-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* ========== ACCESSIBILITY ========== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .typewriter-text {
+    animation: none !important;
+    white-space: normal !important;
+    border-right: none !important;
+  }
+}
+:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 640px) {
+  .typewriter-text {
+    font-size: 1.75rem;
+  }
+  section {
+    scroll-margin-top: 5rem;
+  }
+}
+@media (min-width: 641px) {
+  section {
+    scroll-margin-top: 6rem;
+  }
+}
