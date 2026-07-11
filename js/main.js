@@ -1,12 +1,13 @@
 (function () {
   'use strict';
 
+  const html = document.documentElement;
+
   /* ========================================
      DARK / LIGHT THEME TOGGLE
   ======================================== */
   const themeToggle = document.getElementById('theme-toggle');
   const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-  const html = document.documentElement;
 
   function setTheme(dark) {
     if (dark) {
@@ -35,17 +36,24 @@
   if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
 
   /* ========================================
-     MOBILE MENU
+     MOBILE MENU (Hamburger + Full-screen Overlay)
   ======================================== */
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburger = document.getElementById('hamburger');
+  const mobileOverlay = document.getElementById('mobile-overlay');
 
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+  if (hamburger && mobileOverlay) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileOverlay.classList.toggle('open');
+      html.style.overflow = mobileOverlay.classList.contains('open') ? 'hidden' : '';
     });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+
+    mobileOverlay.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileOverlay.classList.remove('open');
+        html.style.overflow = '';
+      });
     });
   }
 
@@ -55,12 +63,15 @@
   const navbar = document.getElementById('navbar');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
+    const scrollY = window.scrollY;
+    if (scrollY > 80) {
+      navbar.style.transform = 'translateX(-50%) translateY(-2px)';
+      navbar.style.opacity = '0.92';
     } else {
-      navbar.classList.remove('scrolled');
+      navbar.style.transform = 'translateX(-50%) translateY(0)';
+      navbar.style.opacity = '1';
     }
-  });
+  }, { passive: true });
 
   /* ========================================
      SCROLL REVEAL (Intersection Observer)
@@ -77,7 +88,7 @@
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
     );
     revealEls.forEach((el) => observer.observe(el));
   } else {
@@ -87,96 +98,31 @@
   /* ========================================
      SKILL BAR ANIMATION
   ======================================== */
-  function animateSkillBars() {
-    document.querySelectorAll('.skill-bar-fill').forEach((bar) => {
-      const rect = bar.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        bar.classList.add('animate');
-      }
-    });
-  }
+  const skillFills = document.querySelectorAll('.skill-bar-fill');
 
-  window.addEventListener('scroll', animateSkillBars);
-  window.addEventListener('load', animateSkillBars);
-
-  /* ========================================
-     PARTICLE BACKGROUND (Canvas)
-  ======================================== */
-  const canvas = document.getElementById('particle-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const isDark = () => html.classList.contains('dark');
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const PARTICLE_COUNT = 80;
-
-    function createParticles() {
-      particles = [];
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          r: Math.random() * 2 + 0.5,
-          alpha: Math.random() * 0.5 + 0.1,
-        });
-      }
-    }
-    createParticles();
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const color = isDark() ? '37, 99, 235' : '37, 99, 235';
-
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${color}, ${p.alpha})`;
-        ctx.fill();
-      });
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${color}, ${0.08 * (1 - dist / 150)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+  if ('IntersectionObserver' in window) {
+    const skillObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const w = entry.target.getAttribute('data-width');
+            if (w) entry.target.style.width = w + '%';
+            skillObserver.unobserve(entry.target);
           }
-        }
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
-
-    window.addEventListener('resize', () => {
-      resize();
-      createParticles();
+        });
+      },
+      { threshold: 0.3 }
+    );
+    skillFills.forEach((bar) => skillObserver.observe(bar));
+  } else {
+    skillFills.forEach((bar) => {
+      const w = bar.getAttribute('data-width');
+      if (w) bar.style.width = w + '%';
     });
   }
 
   /* ========================================
-     SMAOTH SCROLL FOR NAV LINKS
+     SMOOTH SCROLL FOR NAV LINKS
   ======================================== */
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
