@@ -3,557 +3,429 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gandhi Suastika - Portfolio</title>
-  <meta name="description" content="Portfolio of Kadek Gandhi Wahyu Jaya Suastika - CS Student, Software Engineer, Cybersecurity" />
-  <meta property="og:title" content="Gandhi Suastika - Portfolio" />
-  <meta property="og:description" content="CS Student · Software Engineer · Cybersecurity - Telkom University Surabaya" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://github.com/Gandeeee/portfolio" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <title>Gandhi Suastika — Software Engineer & Cybersecurity</title>
+  <meta name="description" content="Portfolio of Kadek Gandhi Wahyu Jaya Suastika — CS Student, Software Engineer, Cybersecurity Specialist at Telkom University Surabaya" />
+  <meta name="author" content="Kadek Gandhi Wahyu Jaya Suastika" />
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gandhi Suastika — Software Engineer & Cybersecurity" />
+  <meta property="og:description" content="Portfolio of Kadek Gandhi Wahyu Jaya Suastika — CS Student, Software Engineer, Cybersecurity Specialist at Telkom University Surabaya" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gandhisuastika.dev" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Gandhi Suastika — Software Engineer & Cybersecurity" />
+  <meta name="twitter:description" content="Portfolio of Kadek Gandhi Wahyu Jaya Suastika — CS Student, Software Engineer, Cybersecurity Specialist at Telkom University Surabaya" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230A0A0F%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2265%22 fill=%22%2300F0FF%22>G</text></svg>" />
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/css/geist-sans.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.25/dist/lenis.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            heading: ['"Clash Display"', 'sans-serif'],
-            body: ['Geist', 'sans-serif'],
-          },
-          colors: {
-            cream: '#FAF6F1',
-            'cream-dark': '#EDE8E0',
-            espresso: '#2C2420',
-            'espresso-light': '#4A3F3A',
-            navy: { DEFAULT: '#1B3A4B', light: '#2A4F64', dark: '#122B38' },
-            rust: '#C26A4A',
-            parchment: '#E8E2DA',
-            soot: '#1A1817',
-          },
-        },
-      },
-    }
-  </script>
+  <!-- Lenis CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.25/dist/lenis.css" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B3A4B'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Clash Display,sans-serif' font-weight='600' font-size='17' fill='%23FAF6F1'%3EGS%3C/text%3E%3C/svg%3E" />
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/profile-card.css" />
 </head>
-<body class="font-body bg-cream text-espresso dark:bg-soot dark:text-cream-dark">
+<body class="body">
 
-  <div class="page-ambient" aria-hidden="true"></div>
+  <!-- Skip Link -->
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <!-- ===== FLUID ISLAND NAV ===== -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-4 pointer-events-none">
-    <div class="max-w-6xl mx-auto px-4 flex justify-center">
-      <div id="nav-pill" class="nav-pill pointer-events-auto">
-        <a href="#" class="font-heading font-semibold text-sm tracking-tight flex items-center gap-1.5 text-espresso dark:text-cream-dark">
-          <span class="w-2 h-2 rounded-full bg-navy dark:bg-cream-dark/60"></span>
-          gandhi<span class="text-navy/40 dark:text-cream-dark/30 animate-pulse-soft">_</span>
+  <!-- Custom Cursor -->
+  <div class="custom-cursor" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar" class="navbar">
+    <div class="navbar__inner">
+      <a href="#" class="navbar__logo">
+        <span class="navbar__logo-dot"></span>
+        gandhi<span class="navbar__cursor">_</span>
+      </a>
+      <div class="navbar__links">
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+        <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+        <a href="#achievements" class="nav-link" data-section="achievements">Achievements</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+        <div class="navbar__divider"></div>
+        <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn btn--nav">
+          <span class="btn__prefix">>_</span> CV
         </a>
-
-        <div class="hidden md:flex items-center gap-6">
-          <a href="#about" class="nav-link">About</a>
-          <a href="#skills" class="nav-link">Skills</a>
-          <a href="#experience" class="nav-link">Experience</a>
-          <a href="#achievements" class="nav-link">Achievements</a>
-          <a href="#contact" class="nav-link">Contact</a>
-          <div class="w-px h-4 bg-parchment dark:bg-white/10"></div>
-          <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn-pill text-xs">
-            <span>CV</span>
-            <span class="btn-pill-icon">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </span>
-          </a>
-          <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
-            <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
-            <svg class="w-4 h-4 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
-          </button>
-        </div>
-
-        <button id="menu-btn" class="hamburger md:hidden" aria-label="Menu">
-          <span class="h-line"></span>
-          <span class="h-line"></span>
-        </button>
       </div>
-    </div>
-
-      </div>
+      <button id="menu-btn" class="hamburger" aria-label="Menu">
+        <span class="h-line"></span>
+        <span class="h-line"></span>
+      </button>
     </div>
   </nav>
 
-  <div id="mobile-overlay" class="fixed inset-0 z-40 overlay-hidden">
-    <div class="absolute inset-0 bg-cream/95 dark:bg-soot/95 backdrop-blur-3xl"></div>
-    <div class="relative h-full flex flex-col items-center justify-center gap-8 px-6">
-      <a href="#about" class="stagger-link text-3xl font-heading font-semibold text-espresso dark:text-cream-dark no-underline">About</a>
-      <a href="#skills" class="stagger-link text-3xl font-heading font-semibold text-espresso dark:text-cream-dark no-underline">Skills</a>
-      <a href="#experience" class="stagger-link text-3xl font-heading font-semibold text-espresso dark:text-cream-dark no-underline">Experience</a>
-      <a href="#achievements" class="stagger-link text-3xl font-heading font-semibold text-espresso dark:text-cream-dark no-underline">Achievements</a>
-      <a href="#contact" class="stagger-link text-3xl font-heading font-semibold text-espresso dark:text-cream-dark no-underline">Contact</a>
-      <div class="flex items-center gap-4 mt-4 stagger-link">
-        <button id="theme-toggle-mobile" class="theme-btn" aria-label="Toggle theme">
-          <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
-          <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
-        </button>
-        <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn-pill text-sm">
-          <span>Download CV</span>
-          <span class="btn-pill-icon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </span>
-        </a>
-      </div>
+  <!-- Mobile Overlay -->
+  <div id="mobile-overlay" class="mobile-overlay mobile-overlay--hidden">
+    <div class="mobile-overlay__bg"></div>
+    <div class="mobile-overlay__content">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#skills" class="mobile-link">Skills</a>
+      <a href="#experience" class="mobile-link">Experience</a>
+      <a href="#achievements" class="mobile-link">Achievements</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+      <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn btn--primary" style="margin-top:1rem">
+        <span class="btn__prefix">>_</span> Download CV
+      </a>
     </div>
   </div>
 
-  <main id="main" class="relative z-[1]" tabindex="-1">
-
-  <!-- ===== HERO ===== -->
-  <section id="hero" class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
-    <div class="hero-glow" aria-hidden="true"></div>
-    <canvas id="dot-grid" aria-hidden="true"></canvas>
-    <div class="relative z-10 w-full max-w-6xl mx-auto px-4 pt-20 md:pt-0">
-      <div class="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center">
-
-        <!-- Left: ProfileCard -->
-        <div class="reveal-hero flex justify-center md:justify-end">
-          <div class="profile-card">
-            <div class="profile-card-tilt">
-              <img src="assets/Profile%20picture.png" alt="Kadek Gandhi Wahyu Jaya Suastika" class="profile-card-img" loading="eager" />
-            </div>
-            <span class="profile-card-caption">Kadek Gandhi W. J. Suastika</span>
-          </div>
-        </div>
-
-        <!-- Right: Text Content -->
-        <div class="text-center md:text-left">
-
-          <div class="reveal-hero mb-6">
-            <span class="eyebrow inline-flex">Cybersecurity · Software Engineering - Surabaya</span>
-          </div>
-
-          <div class="reveal-hero" style="transition-delay:150ms">
-            <h1 class="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.92] tracking-tight text-espresso dark:text-cream-dark">
-              Kadek Gandhi<br />
-              <span class="text-navy dark:text-cream-dark/70 text-[0.55em] font-medium block mt-2">Wahyu Jaya Suastika</span>
-            </h1>
-          </div>
-
-          <div class="max-w-md reveal-hero mt-8" style="transition-delay:300ms">
-            <p class="text-base md:text-lg text-espresso-light dark:text-cream-dark/60 leading-relaxed">
-              Computer Science student at Telkom University. Building secure software by day, cracking CTFs by night.
-            </p>
-          </div>
-
-          <div class="flex flex-wrap gap-4 justify-center md:justify-start mt-8 reveal-hero" style="transition-delay:450ms">
-            <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn-primary group">
-              <span>Download CV</span>
-              <span class="btn-icon-wrap">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              </span>
-            </a>
-            <a href="#contact" class="btn-secondary group">
-              <span>Get in Touch</span>
-              <span class="btn-icon-wrap">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </span>
-            </a>
-          </div>
-
-          <div class="flex gap-5 justify-center md:justify-start mt-10 reveal-hero" style="transition-delay:600ms">
-            <a href="mailto:gandhisuastika@gmail.com" class="social-link" aria-label="Email">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4H2l20 16Z"/><path d="M2 4l10 8L22 4"/></svg>
-            </a>
-            <a href="https://linkedin.com/in/gandhi-suastika-418218280" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-            <a href="https://github.com/Gandeeee" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            </a>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== ABOUT ===== -->
-  <section id="about" class="py-28 md:py-36 px-4 relative">
-    <div class="max-w-6xl mx-auto relative z-10">
-      <div class="text-center mb-16 md:mb-20 reveal">
-        <h2 class="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] mt-4 text-espresso dark:text-cream-dark">Who I Am</h2>
-        <div class="w-12 h-0.5 bg-navy/20 dark:bg-cream-dark/10 rounded-full mx-auto mt-6"></div>
-      </div>
-
-      <div class="grid md:grid-cols-5 gap-6 md:gap-8 items-start">
-        <div class="md:col-span-3 reveal" style="transition-delay:100ms">
-          <div class="db">
-            <div class="db-inner p-7 md:p-8 space-y-5">
-              <p class="text-base md:text-lg leading-relaxed text-espresso-light dark:text-cream-dark/70">
-                Computer Science student (GPA 3.98) at Telkom University specializing in software engineering, databases, and cybersecurity. Built a mobile ML classification app with 90%+ accuracy, administered a production PostgreSQL/ERP database, and taught over 75 students as a practicum assistant.
-              </p>
-              <p class="text-base md:text-lg leading-relaxed text-espresso-light dark:text-cream-dark/70">
-                3rd-place CTF finisher with Google and Cisco cybersecurity certifications. Seeking software engineering or cybersecurity roles where hands-on technical delivery matters more than titles.
-              </p>
-              <div class="flex flex-wrap gap-2 pt-2">
-                <span class="pill-tag">GPA 3.98</span>
-                <span class="pill-tag">75+ Students Taught</span>
-                <span class="pill-tag">CTF 3rd Place</span>
-                <span class="pill-tag">Google Certified</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="md:col-span-2 grid grid-cols-3 gap-3 md:gap-4">
-          <div class="db reveal" style="transition-delay:200ms">
-            <div class="db-inner p-5 md:p-6 text-center">
-              <div class="text-3xl md:text-4xl font-heading font-bold text-navy dark:text-cream-dark mb-0.5 stat-num">3.98</div>
-              <div class="text-[10px] md:text-xs uppercase tracking-[0.15em] text-espresso-light dark:text-cream-dark/50">GPA</div>
-            </div>
-          </div>
-          <div class="db reveal" style="transition-delay:300ms">
-            <div class="db-inner p-5 md:p-6 text-center">
-              <div class="text-3xl md:text-4xl font-heading font-bold text-navy dark:text-cream-dark mb-0.5 stat-num">75+</div>
-              <div class="text-[10px] md:text-xs uppercase tracking-[0.15em] text-espresso-light dark:text-cream-dark/50">Students</div>
-            </div>
-          </div>
-          <div class="db reveal" style="transition-delay:400ms">
-            <div class="db-inner p-5 md:p-6 text-center">
-              <div class="text-3xl md:text-4xl font-heading font-bold text-navy dark:text-cream-dark mb-0.5 stat-num">3rd</div>
-              <div class="text-[10px] md:text-xs uppercase tracking-[0.15em] text-espresso-light dark:text-cream-dark/50">CTF Place</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SKILLS ===== -->
-  <section id="skills" class="py-28 md:py-36 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 md:mb-20 reveal">
-        <h2 class="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] mt-4 text-espresso dark:text-cream-dark">Tech Stack</h2>
-        <div class="w-12 h-0.5 bg-navy/20 dark:bg-cream-dark/10 rounded-full mx-auto mt-6"></div>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-5 md:gap-6">
-        <div class="db reveal">
-          <div class="db-inner p-6 md:p-7 flex flex-col h-full">
-            <h3 class="font-heading text-base font-semibold mb-5 flex items-center gap-2.5 text-espresso dark:text-cream-dark">
-              <svg class="w-4 h-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-              Programming &amp; Scripting
-            </h3>
-            <div class="space-y-3.5 flex-1">
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" alt="" />C</div><span class="skill-pct text-navy dark:text-cream-dark/60">90%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div>
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="" />C++</div><span class="skill-pct text-navy dark:text-cream-dark/60">85%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div>
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" />Python</div><span class="skill-pct text-navy dark:text-cream-dark/60">90%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div>
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" alt="" />Go</div><span class="skill-pct text-navy dark:text-cream-dark/60">75%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="75"></div></div>
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="" />JavaScript</div><span class="skill-pct text-navy dark:text-cream-dark/60">85%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div>
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="" />Bash</div><span class="skill-pct text-navy dark:text-cream-dark/60">80%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="80"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="db reveal">
-          <div class="db-inner p-6 md:p-7 flex flex-col h-full">
-            <h3 class="font-heading text-base font-semibold mb-5 flex items-center gap-2.5 text-espresso dark:text-cream-dark">
-              <svg class="w-4 h-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.21a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.172a2 2 0 0 0 .586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 0 0 9 10.172V5L8 4Z"/></svg>
-              Frameworks &amp; Platforms
-            </h3>
-            <div class="flex flex-wrap gap-2 flex-1 content-start">
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" alt="" />Flutter</span>
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="" />Laravel</span>
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="" />PostgreSQL</span>
-              <span class="pill-tag">MQTT</span>
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" alt="" />TensorFlow</span>
-              <span class="pill-tag">MobileNetV2</span>
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="" />Git</span>
-              <span class="pill-tag">FastAPI</span>
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="" />React</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="db reveal">
-          <div class="db-inner p-6 md:p-7 flex flex-col h-full">
-            <h3 class="font-heading text-base font-semibold mb-5 flex items-center gap-2.5 text-espresso dark:text-cream-dark">
-              <svg class="w-4 h-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2Zm10-10V7a4 4 0 0 0-8 0v4h8Z"/></svg>
-              Systems &amp; Security
-            </h3>
-            <div class="flex flex-wrap gap-2 mb-5">
-              <span class="pill-tag">Kali Linux</span>
-              <span class="pill-tag"><img class="w-3.5 h-3.5 align-middle mr-1 inline" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="" />Linux Admin</span>
-              <span class="pill-tag">Windows</span>
-              <span class="pill-tag">macOS</span>
-              <span class="pill-tag">Network Security</span>
-              <span class="pill-tag">Web Security</span>
-            </div>
-            <div class="pt-4 border-t border-parchment dark:border-white/5">
-              <div class="skill-row"><div class="skill-label"><img class="skill-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="" />Kali Linux Toolset</div><span class="skill-pct text-navy dark:text-cream-dark/60">85%</span></div>
-              <div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== EXPERIENCE ===== -->
-  <section id="experience" class="py-28 md:py-36 px-4 relative">
-    <div class="max-w-6xl mx-auto relative z-10">
-      <div class="text-center mb-16 md:mb-20 reveal">
-        <h2 class="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] mt-4 text-espresso dark:text-cream-dark">Where I've Worked</h2>
-        <div class="w-12 h-0.5 bg-navy/20 dark:bg-cream-dark/10 rounded-full mx-auto mt-6"></div>
-      </div>
-
-      <div class="relative">
-        <div class="absolute left-[17px] md:left-[21px] top-0 bottom-0 w-px bg-parchment dark:bg-white/[0.07]"></div>
-        <div class="space-y-8 md:space-y-10">
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Feb 2026 - Present</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">Database Administrator &amp; Architect</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Research Team, Telkom University Surabaya</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Design and administer PostgreSQL database architecture for a production ERP system supporting manufacturing operations aligned with SDG 9. Build and maintain Entity-Relationship Diagrams (ERD) and integrity constraints.</p>
-              </div>
-            </div>
-          </div>
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Feb 2026 - Jul 2026</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">Full Stack Developer - &ldquo;Fruto Sense&rdquo;</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Campus Project, Telkom University</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Built a fruit-scanning mobile app classifying freshness, type, and ripeness using a 3-layer MobileNetV2 model with 90%+ accuracy. Integrated Flutter frontend with Laravel + PostgreSQL backend. Selected as featured project at CS Accreditation Exhibition.</p>
-              </div>
-            </div>
-          </div>
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Aug 2025 - Oct 2025</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">Frontend Developer - Infinity Photos</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Contract</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Built and maintained responsive frontend interfaces for a photography platform. Collaborated with design team to implement pixel-perfect UI components and optimize page performance.</p>
-              </div>
-            </div>
-          </div>
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Jun 2025 - Aug 2025</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">Frontend Developer - PT Kinarya Agung Prima</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Contract</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Developed and maintained web application interfaces using React and modern frontend tooling. Worked in an agile team to deliver features on schedule and improve code quality across the frontend codebase.</p>
-              </div>
-            </div>
-          </div>
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Mar 2025 - Jul 2026</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">IoT Developer - Aquaculture &amp; Irrigation Systems</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Telkom University / LPPM Tel-U</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Designed and deployed two field IoT systems: automated catfish feeding with MQTT remote control, and drip irrigation for farmers in Sari Rogo Village. Wired hardware, programmed microcontrollers, and configured MQTT protocols.</p>
-              </div>
-            </div>
-          </div>
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Apr 2025 - Present</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">Practicum &amp; Lab Assistant</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Telkom University Surabaya</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Taught 41 students in Data Structures (ADTs, Linked Lists, Queues) and 38 students in Operating Systems (Xinu OS, Linux/Windows configuration). Mentor students in Core Programming labs.</p>
-              </div>
-            </div>
-          </div>
-          <div class="relative pl-12 md:pl-14 reveal">
-            <div class="absolute left-[11px] md:left-[15px] top-2 w-3 h-3 rounded-full bg-navy dark:bg-cream-dark/40 ring-2 ring-cream dark:ring-soot"></div>
-            <div class="db">
-              <div class="db-inner p-5 md:p-6">
-                <span class="text-[11px] font-medium text-navy/60 dark:text-cream-dark/40 uppercase tracking-[0.12em]">Dec 2023 - Present</span>
-                <h3 class="font-heading text-base md:text-lg font-semibold mt-1.5 text-espresso dark:text-cream-dark">Freelance IT Consultant &amp; Tutor</h3>
-                <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mb-2">Surabaya</p>
-                <p class="text-sm leading-relaxed text-espresso-light dark:text-cream-dark/60">Deliver private instruction in Linear Algebra, Calculus, and Advanced Programming. Tutored a student with intellectual disability using individualized methods; raised average grade from C to A/B across all courses within 6 months.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== ACHIEVEMENTS ===== -->
-  <section id="achievements" class="py-28 md:py-36 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 md:mb-20 reveal">
-        <h2 class="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] mt-4 text-espresso dark:text-cream-dark">Certifications &amp; Awards</h2>
-        <div class="w-12 h-0.5 bg-navy/20 dark:bg-cream-dark/10 rounded-full mx-auto mt-6"></div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-        <div class="db reveal">
-          <div class="db-inner p-6 text-center">
-            <svg class="w-11 h-11 mx-auto mb-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2Zm10-10V7a4 4 0 0 0-8 0v4h8Z"/></svg>
-            <h3 class="font-heading font-semibold text-sm text-espresso dark:text-cream-dark">3rd Place CTF</h3>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">Telkom University Surabaya (2024)</p>
-            <p class="text-[11px] text-espresso-light/50 dark:text-cream-dark/30 mt-2 leading-relaxed">Forensics, Web Exploitation, Crypto, Reverse Engineering</p>
-          </div>
-        </div>
-        <div class="db reveal">
-          <div class="db-inner p-6 text-center">
-            <svg class="w-11 h-11 mx-auto mb-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
-            <h3 class="font-heading font-semibold text-sm text-espresso dark:text-cream-dark">Certified in Cybersecurity</h3>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">Google (2025)</p>
-          </div>
-        </div>
-         <div class="db reveal">
-           <div class="db-inner p-6 text-center">
-               <svg class="w-11 h-11 mx-auto mb-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
-            <h3 class="font-heading font-semibold text-sm text-espresso dark:text-cream-dark">Cisco Cybersecurity</h3>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">Fundamentals Certificate (2025)</p>
-          </div>
-        </div>
-        <div class="db reveal">
-          <div class="db-inner p-6 text-center">
-            <svg class="w-11 h-11 mx-auto mb-4 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z"/></svg>
-            <h3 class="font-heading font-semibold text-sm text-espresso dark:text-cream-dark">Talent Scouting Academy</h3>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">Cybersecurity Training (2024)</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-8 text-center reveal">
-        <div class="inline-flex items-center gap-2 px-4 py-2 text-xs text-espresso-light/60 dark:text-cream-dark/50 rounded-full border border-parchment dark:border-white/[0.07] bg-cream/50 dark:bg-white/[0.02]">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6"/></svg>
-          <span>Languages: Bahasa Indonesia (Native), English (Professional), Russian (Elementary)</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LEADERSHIP ===== -->
-  <section id="leadership" class="py-28 md:py-36 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 md:mb-20 reveal">
-        <h2 class="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] mt-4 text-espresso dark:text-cream-dark">Organizations</h2>
-        <div class="w-12 h-0.5 bg-navy/20 dark:bg-cream-dark/10 rounded-full mx-auto mt-6"></div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-5 md:gap-6">
-        <div class="db reveal">
-          <div class="db-inner p-5 md:p-6">
-            <div class="flex items-start gap-4">
-              <svg class="w-10 h-10 flex-shrink-0 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 0 1 5.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 0 1 9.288 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM7 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/></svg>
-              <div class="min-w-0">
-                <h3 class="font-heading text-sm font-semibold text-espresso dark:text-cream-dark">Director, Telemarketing &amp; Services</h3>
-                <p class="text-[11px] text-navy/60 dark:text-cream-dark/40 mt-0.5">Marketing Crew Tel-U Surabaya - Feb 2024 - Feb 2025</p>
-                <p class="text-sm text-espresso-light dark:text-cream-dark/60 mt-2">Led a customer service team and coordinated major campus events including graduation ceremonies.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="db reveal">
-          <div class="db-inner p-5 md:p-6">
-            <div class="flex items-start gap-4">
-              <svg class="w-10 h-10 flex-shrink-0 text-navy dark:text-cream-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 0 1-3.417.592l-2.147-6.15M18 13a3 3 0 1 0 0-6M5.436 13.683A4.001 4.001 0 0 1 7 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 0 1-1.564-.317Z"/></svg>
-              <div class="min-w-0">
-                <h3 class="font-heading text-sm font-semibold text-espresso dark:text-cream-dark">Public Relations Coordinator</h3>
-                <p class="text-[11px] text-navy/60 dark:text-cream-dark/40 mt-0.5">East Java Student Leader Summit Vol. 2 - Mar 2025 - Jun 2025</p>
-                <p class="text-sm text-espresso-light dark:text-cream-dark/60 mt-2">Directed media and sponsor outreach for the event.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONTACT ===== -->
-  <section id="contact" class="py-28 md:py-36 px-4">
-    <div class="max-w-4xl mx-auto text-center">
-      <div class="reveal">
-        <h2 class="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] mt-4 text-espresso dark:text-cream-dark">Let&rsquo;s Work Together</h2>
-        <div class="w-12 h-0.5 bg-navy/20 dark:bg-cream-dark/10 rounded-full mx-auto mt-6 mb-8"></div>
-        <p class="text-base md:text-lg text-espresso-light dark:text-cream-dark/60 max-w-lg mx-auto">
-          Looking for a software engineer or cybersecurity role where hands-on technical delivery matters. Currently based in Surabaya, Indonesia.
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <canvas id="terrain-canvas" aria-hidden="true"></canvas>
+    <div class="hero__grid">
+      <div class="hero__content">
+        <div class="hero__badge reveal-hero">> CS @ Telkom University Surabaya</div>
+        <h1 class="hero__name">
+          <span class="hero__line reveal-hero">Kadek Gandhi</span>
+          <span class="hero__line hero__line--sub reveal-hero">Wahyu Jaya Suastika</span>
+        </h1>
+        <p class="hero__tagline reveal-hero">
+          <span class="typed-prefix">> </span>
+          Securing systems. Building software. Breaking CTFs.
         </p>
+        <div class="hero__actions reveal-hero">
+          <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn btn--primary">
+            <span class="btn__prefix">>_</span> Download CV
+          </a>
+          <a href="#contact" class="btn btn--ghost">
+            <span class="btn__prefix">>_</span> Get in Touch
+          </a>
+        </div>
+        <div class="hero__socials reveal-hero">
+          <a href="mailto:gandhisuastika@gmail.com" class="social-link" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/gandhi-suastika-418218280" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://github.com/Gandeeee" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
       </div>
-
-      <div class="grid sm:grid-cols-3 gap-4 md:gap-5 my-10 reveal">
-        <a href="mailto:gandhisuastika@gmail.com" class="db group">
-          <div class="db-inner p-5 md:p-6 text-center">
-            <svg class="w-5 h-5 mx-auto mb-3 text-espresso-light/40 dark:text-cream-dark/30 group-hover:text-navy dark:group-hover:text-cream-dark/70 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M22 4H2l20 16Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 4l10 8L22 4"/></svg>
-            <p class="text-sm font-medium text-espresso dark:text-cream-dark">Email</p>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">gandhisuastika@gmail.com</p>
-          </div>
-        </a>
-        <a href="https://linkedin.com/in/gandhi-suastika-418218280" target="_blank" rel="noopener" class="db group">
-          <div class="db-inner p-5 md:p-6 text-center">
-            <svg class="w-5 h-5 mx-auto mb-3 text-espresso-light/40 dark:text-cream-dark/30 group-hover:text-navy dark:group-hover:text-cream-dark/70 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            <p class="text-sm font-medium text-espresso dark:text-cream-dark">LinkedIn</p>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">Connect with me</p>
-          </div>
-        </a>
-        <a href="https://github.com/Gandeeee" target="_blank" rel="noopener" class="db group">
-          <div class="db-inner p-5 md:p-6 text-center">
-            <svg class="w-5 h-5 mx-auto mb-3 text-espresso-light/40 dark:text-cream-dark/30 group-hover:text-navy dark:group-hover:text-cream-dark/70 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            <p class="text-sm font-medium text-espresso dark:text-cream-dark">GitHub</p>
-            <p class="text-xs text-espresso-light/60 dark:text-cream-dark/40 mt-0.5">@Gandeeee</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="reveal">
-        <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn-primary group mx-auto w-fit">
-          <span>Download CV (PDF)</span>
-          <span class="btn-icon-wrap">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </span>
-        </a>
+      <div class="hero__photo reveal-hero">
+        <div class="photo-glitch">
+          <img src="assets/Profile%20picture.png" alt="Kadek Gandhi Wahyu Jaya Suastika" loading="eager" />
+          <div class="scanlines" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Main Content -->
+  <main id="main" tabindex="-1">
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="section-header reveal">
+        <span class="section-label">> 01</span>
+        <h2 class="section-title">System Profile</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="terminal-card reveal">
+        <div class="terminal-card__header">
+          <span class="terminal-dot terminal-dot--red"></span>
+          <span class="terminal-dot terminal-dot--yellow"></span>
+          <span class="terminal-dot terminal-dot--green"></span>
+          <span class="terminal-card__title">system_profile.log</span>
+        </div>
+        <div class="terminal-card__body">
+          <p>Computer Science student (GPA 3.98) at Telkom University specializing in software engineering, databases, and cybersecurity. Built a mobile ML classification app with 90%+ accuracy, administered a production PostgreSQL/ERP database, and taught over 75 students as a practicum assistant.</p>
+          <p>3rd-place CTF finisher with Google and Cisco cybersecurity certifications. Seeking software engineering or cybersecurity roles where hands-on technical delivery matters more than titles.</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-card__value stat-num">3.98</div>
+          <div class="stat-card__label">GPA</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-card__value stat-num">75+</div>
+          <div class="stat-card__label">Students Taught</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-card__value stat-num">3rd</div>
+          <div class="stat-card__label">CTF Placement</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+      <div class="section-header reveal">
+        <span class="section-label">> 02</span>
+        <h2 class="section-title">Tech Arsenal</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <!-- Programming & Scripting -->
+      <div class="skills-category">
+        <h3 class="skills-category__title"><span class="accent">//</span> Programming & Scripting</h3>
+        <div class="skills-grid">
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" alt="" /><span class="skill-item__name">C</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="" /><span class="skill-item__name">C++</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" /><span class="skill-item__name">Python</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" alt="" /><span class="skill-item__name">Go</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="" /><span class="skill-item__name">JavaScript</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="" /><span class="skill-item__name">Bash</span></div>
+        </div>
+      </div>
+
+      <!-- Frameworks & Platforms -->
+      <div class="skills-category">
+        <h3 class="skills-category__title"><span class="accent">//</span> Frameworks & Platforms</h3>
+        <div class="skills-grid">
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" alt="" /><span class="skill-item__name">Flutter</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="" /><span class="skill-item__name">Laravel</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="" /><span class="skill-item__name">PostgreSQL</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">MQ</span><span class="skill-item__name">MQTT</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" alt="" /><span class="skill-item__name">TensorFlow</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">V2</span><span class="skill-item__name">MobileNetV2</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="" /><span class="skill-item__name">Git</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">FA</span><span class="skill-item__name">FastAPI</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="" /><span class="skill-item__name">React</span></div>
+        </div>
+      </div>
+
+      <!-- Systems & Security -->
+      <div class="skills-category">
+        <h3 class="skills-category__title"><span class="accent">//</span> Systems & Security</h3>
+        <div class="skills-grid">
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">KL</span><span class="skill-item__name">Kali Linux</span></div>
+          <div class="skill-item reveal"><img class="skill-item__icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="" /><span class="skill-item__name">Linux Admin</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">W</span><span class="skill-item__name">Windows</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">macOS</span><span class="skill-item__name">macOS</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">NS</span><span class="skill-item__name">Network Security</span></div>
+          <div class="skill-item reveal"><span class="skill-item__icon skill-item__icon--text">WS</span><span class="skill-item__name">Web Security</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <div class="section-header reveal">
+        <span class="section-label">> 03</span>
+        <h2 class="section-title">Changelog</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__stream" aria-hidden="true"></div>
+
+        <!-- Entry 1 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Feb 2026 → Present</div>
+          <h3 class="timeline__title">Database Administrator & Architect</h3>
+          <div class="timeline__org">Research Team, Telkom University Surabaya</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Design and administer PostgreSQL database architecture for a production ERP system supporting manufacturing operations aligned with SDG 9. Build and maintain Entity-Relationship Diagrams (ERD) and integrity constraints.</p>
+        </div>
+
+        <!-- Entry 2 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Feb 2026 → Jul 2026</div>
+          <h3 class="timeline__title">Full Stack Developer — "Fruto Sense"</h3>
+          <div class="timeline__org">Campus Project, Telkom University</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Built a fruit-scanning mobile app classifying freshness, type, and ripeness using a 3-layer MobileNetV2 model with 90%+ accuracy. Integrated Flutter frontend with Laravel + PostgreSQL backend. Selected as featured project at CS Accreditation Exhibition.</p>
+        </div>
+
+        <!-- Entry 3 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Aug 2025 → Oct 2025</div>
+          <h3 class="timeline__title">Frontend Developer — Infinity Photos</h3>
+          <div class="timeline__org">Contract</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Built and maintained responsive frontend interfaces for a photography platform. Collaborated with design team to implement pixel-perfect UI components and optimize page performance.</p>
+        </div>
+
+        <!-- Entry 4 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Jun 2025 → Aug 2025</div>
+          <h3 class="timeline__title">Frontend Developer — PT Kinarya Agung Prima</h3>
+          <div class="timeline__org">Contract</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Developed and maintained web application interfaces using React and modern frontend tooling. Worked in an agile team to deliver features on schedule and improve code quality across the frontend codebase.</p>
+        </div>
+
+        <!-- Entry 5 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Mar 2025 → Jul 2026</div>
+          <h3 class="timeline__title">IoT Developer — Aquaculture & Irrigation Systems</h3>
+          <div class="timeline__org">Telkom University / LPPM Tel-U</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Designed and deployed two field IoT systems: automated catfish feeding with MQTT remote control, and drip irrigation for farmers in Sari Rogo Village. Wired hardware, programmed microcontrollers, and configured MQTT protocols.</p>
+        </div>
+
+        <!-- Entry 6 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Apr 2025 → Present</div>
+          <h3 class="timeline__title">Practicum & Lab Assistant</h3>
+          <div class="timeline__org">Telkom University Surabaya</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Taught 41 students in Data Structures (ADTs, Linked Lists, Queues) and 38 students in Operating Systems (Xinu OS, Linux/Windows configuration). Mentor students in Core Programming labs.</p>
+        </div>
+
+        <!-- Entry 7 -->
+        <div class="timeline__entry reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__date">Dec 2023 → Present</div>
+          <h3 class="timeline__title">Freelance IT Consultant & Tutor</h3>
+          <div class="timeline__org">Surabaya</div>
+          <div class="timeline__line"></div>
+          <p class="timeline__desc">Deliver private instruction in Linear Algebra, Calculus, and Advanced Programming. Tutored a student with intellectual disability using individualized methods; raised average grade from C to A/B across all courses within 6 months.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section">
+      <div class="section-header reveal">
+        <span class="section-label">> 04</span>
+        <h2 class="section-title">Credentials</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="credentials-grid">
+        <div class="credential-card reveal">
+          <div class="credential-card__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2Zm10-10V7a4 4 0 0 0-8 0v4h8Z"/></svg>
+          </div>
+          <h3 class="credential-card__title">3rd Place CTF</h3>
+          <p class="credential-card__issuer">Telkom University Surabaya (2024)</p>
+          <p class="credential-card__detail">Forensics, Web Exploitation, Crypto, Reverse Engineering</p>
+        </div>
+        <div class="credential-card reveal">
+          <div class="credential-card__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
+          </div>
+          <h3 class="credential-card__title">Certified in Cybersecurity</h3>
+          <p class="credential-card__issuer">Google (2025)</p>
+        </div>
+        <div class="credential-card reveal">
+          <div class="credential-card__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
+          </div>
+          <h3 class="credential-card__title">Cisco Cybersecurity</h3>
+          <p class="credential-card__issuer">Fundamentals Certificate (2025)</p>
+        </div>
+        <div class="credential-card reveal">
+          <div class="credential-card__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z"/></svg>
+          </div>
+          <h3 class="credential-card__title">Talent Scouting Academy</h3>
+          <p class="credential-card__issuer">Cybersecurity Training (2024)</p>
+        </div>
+      </div>
+
+      <div class="languages-badge reveal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6"/></svg>
+        <span>Languages: Bahasa Indonesia (Native), English (Professional), Russian (Elementary)</span>
+      </div>
+    </section>
+
+    <!-- Organizations Section -->
+    <section id="leadership" class="section">
+      <div class="section-header reveal">
+        <span class="section-label">> 05</span>
+        <h2 class="section-title">Network</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="org-grid">
+        <div class="org-card reveal">
+          <div class="org-card__marker"></div>
+          <h3 class="org-card__title">Director, Telemarketing & Services</h3>
+          <div class="org-card__meta">Marketing Crew Tel-U Surabaya · Feb 2024 — Feb 2025</div>
+          <p class="org-card__desc">Led a customer service team and coordinated major campus events including graduation ceremonies.</p>
+        </div>
+        <div class="org-card reveal">
+          <div class="org-card__marker"></div>
+          <h3 class="org-card__title">Public Relations Coordinator</h3>
+          <div class="org-card__meta">East Java Student Leader Summit Vol. 2 · Mar 2025 — Jun 2025</div>
+          <p class="org-card__desc">Directed media and sponsor outreach for the event.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section section--contact">
+      <div class="section-header reveal">
+        <span class="section-label">> 06</span>
+        <h2 class="section-title">Establish Connection</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="contact-grid">
+        <a href="mailto:gandhisuastika@gmail.com" class="contact-card reveal">
+          <svg class="contact-card__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <div class="contact-card__title">Email</div>
+          <div class="contact-card__value">gandhisuastika@gmail.com</div>
+          <div class="contact-card__status">Available</div>
+        </a>
+        <a href="https://linkedin.com/in/gandhi-suastika-418218280" target="_blank" rel="noopener" class="contact-card reveal">
+          <svg class="contact-card__icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <div class="contact-card__title">LinkedIn</div>
+          <div class="contact-card__value">Connect with me</div>
+          <div class="contact-card__status">Open</div>
+        </a>
+        <a href="https://github.com/Gandeeee" target="_blank" rel="noopener" class="contact-card reveal">
+          <svg class="contact-card__icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <div class="contact-card__title">GitHub</div>
+          <div class="contact-card__value">@Gandeeee</div>
+          <div class="contact-card__status">Active</div>
+        </a>
+      </div>
+
+      <div class="contact-cta reveal">
+        <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="btn btn--primary btn--large">
+          <span class="btn__prefix">>_</span> Download CV (PDF)
+        </a>
+      </div>
+    </section>
 
   </main>
 
-  <!-- ===== FOOTER ===== -->
-  <footer class="py-8 px-4 border-t border-parchment dark:border-white/[0.06]">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="text-xs text-espresso-light/50 dark:text-cream-dark/40">
-        &copy; 2026 Kadek Gandhi Wahyu Jaya Suastika. Built with
-        <span class="text-navy dark:text-cream-dark/60">&lt;/&gt;</span>
-      </p>
-      <div class="flex items-center gap-6">
-        <a href="#hero" class="text-[11px] text-espresso-light/50 dark:text-cream-dark/40 hover:text-navy dark:hover:text-cream-dark/70 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] uppercase tracking-[0.12em] no-underline">Back to Top</a>
-        <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="text-[11px] text-espresso-light/50 dark:text-cream-dark/40 hover:text-navy dark:hover:text-cream-dark/70 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] uppercase tracking-[0.12em] no-underline">Download CV</a>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; 2026 Kadek Gandhi Wahyu Jaya Suastika. Built with <span class="accent">&lt;/&gt;</span></p>
+      <div class="footer__links">
+        <a href="#hero" class="footer__link">Back to Top</a>
+        <a href="CV_Kadek_Gandhi_5-7-2026.pdf" download class="footer__link">Download CV</a>
       </div>
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/profile-card.js"></script>
+
 </body>
 </html>

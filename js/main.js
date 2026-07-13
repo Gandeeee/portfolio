@@ -1,245 +1,242 @@
+/**
+ * main.js — Cybersecurity Portfolio
+ * Assumes globals: THREE (r128), gsap, ScrollTrigger, Lenis
+ */
 (function () {
   'use strict';
 
-  /* ========================================
-     DARK / LIGHT THEME TOGGLE
-  ======================================== */
-  const themeToggles = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
-  const html = document.documentElement;
+  // ──────────────────────────────────────────────
+  // 1. LENIS SMOOTH SCROLL
+  // ──────────────────────────────────────────────
+  var lenis = new Lenis({ autoRaf: false });
 
-  function setTheme(dark) {
-    if (dark) {
-      html.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      html.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }
+  gsap.registerPlugin(ScrollTrigger);
 
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    setTheme(true);
-  }
+  lenis.on('scroll', ScrollTrigger.update);
 
-  function toggleTheme() {
-    const isDark = html.classList.contains('dark');
-    if (document.startViewTransition) {
-      document.startViewTransition(() => setTheme(!isDark));
-    } else {
-      setTheme(!isDark);
-    }
-  }
-  themeToggles.forEach(function (btn) {
-    btn.addEventListener('click', toggleTheme);
+  gsap.ticker.add(function (time) {
+    lenis.raf(time * 1000);
   });
 
-  /* ========================================
-     LENIS SMOOTH SCROLL
-   ======================================== */
-  var lenis = new Lenis({ autoRaf: true, autoToggle: true, anchors: true });
+  gsap.ticker.lagSmoothing(0);
 
-  /* ========================================
-     FLUID ISLAND — HAMBURGER MORPH + OVERLAY
-   ======================================== */
+  // ──────────────────────────────────────────────
+  // 2. THREE.JS WIREFRAME TERRAIN
+  // ──────────────────────────────────────────────
+  (function () {
+    var canvas = document.getElementById('terrain-canvas');
+    if (!canvas) return;
+
+    // --- Noise functions ---
+    function noise2D(x, y) {
+      var n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+      return n - Math.floor(n);
+    }
+
+    function smoothNoise(x, y) {
+      var ix = Math.floor(x), iy = Math.floor(y);
+      var fx = x - ix, fy = y - iy;
+      fx = fx * fx * (3 - 2 * fx);
+      fy = fy * fy * (3 - 2 * fy);
+      var a = noise2D(ix, iy), b = noise2D(ix + 1, iy);
+      var c = noise2D(ix, iy + 1), d = noise2D(ix + 1, iy + 1);
+      return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy;
+    }
+
+    function fbm(x, y) {
+      var val = 0, amp = 1, freq = 1;
+      for (var i = 0; i < 4; i++) {
+        val += smoothNoise(x * freq, y * freq) * amp;
+        amp *= 0.5;
+        freq *= 2;
+      }
+      return val;
+    }
+
+    // --- Scene setup ---
+    var scene = new THREE.Scene();
+
+    var camera = new THREE.PerspectiveCamera(
+      60,
+      canvas.clientWidth / canvas.clientHeight,
+      0.1,
+      100
+    );
+    camera.position.set(0, 5, 10);
+    camera.lookAt(0, 0, 0);
+
+    var renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true
+    });
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // --- Terrain geometry ---
+    var geometry = new THREE.PlaneGeometry(30, 30, 60, 60);
+    geometry.rotateX(-Math.PI / 2.2);
+
+    var posAttr = geometry.getAttribute('position');
+    for (var i = 0; i < posAttr.count; i++) {
+      var x = posAttr.getX(i);
+      var y = posAttr.getY(i);
+      var z = posAttr.getZ(i);
+      z += fbm(x * 0.3, y * 0.3) * 2;
+      posAttr.setZ(i, z);
+    }
+    posAttr.needsUpdate = true;
+
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x00f0ff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.15
+    });
+
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    // --- Mouse tracking ---
+    var mouse = { x: 0, y: 0 };
+
+    document.addEventListener('mousemove', function (e) {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    // --- Animation control via IntersectionObserver ---
+    var isHeroVisible = true;
+    var animFrameId = null;
+
+    var heroSection = document.getElementById('hero');
+    if (heroSection && 'IntersectionObserver' in window) {
+      var heroObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            isHeroVisible = entry.isIntersecting;
+            if (isHeroVisible && !animFrameId) {
+              animate();
+            }
+          });
+        },
+        { threshold: 0 }
+      );
+      heroObserver.observe(heroSection);
+    }
+
+    // --- Render loop ---
+    function animate() {
+      if (!isHeroVisible) {
+        animFrameId = null;
+        return;
+      }
+      animFrameId = requestAnimationFrame(animate);
+
+      // Camera parallax
+      camera.position.x += (mouse.x * 2 - camera.position.x) * 0.02;
+      camera.position.y = 5 + mouse.y * 0.5;
+      camera.lookAt(0, 0, 0);
+
+      // Slow terrain rotation
+      mesh.rotation.z += 0.001;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // --- Resize handler ---
+    window.addEventListener('resize', function () {
+      var width = canvas.clientWidth;
+      var height = canvas.clientHeight;
+      if (width === 0 || height === 0) return;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    });
+  })();
+
+  // ──────────────────────────────────────────────
+  // 3. GSAP SCROLL ANIMATIONS
+  // ──────────────────────────────────────────────
+
+  // Hero reveals (immediate on page load, no ScrollTrigger)
+  gsap.to('.reveal-hero', {
+    y: 0,
+    opacity: 1,
+    filter: 'blur(0px)',
+    duration: 1,
+    stagger: 0.15,
+    ease: 'power3.out',
+    delay: 0.3
+  });
+
+  // Section reveals (ScrollTrigger-driven)
+  var reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(function (el) {
+    gsap.to(el, {
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        once: true
+      },
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power2.out'
+    });
+  });
+
+  // ──────────────────────────────────────────────
+  // 4. NAVIGATION (scroll spy, hamburger, mobile menu)
+  // ──────────────────────────────────────────────
+
+  // Scroll spy
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-link[data-section]');
+
+  lenis.on('scroll', function () {
+    var scrollY = window.scrollY + window.innerHeight / 3;
+    sections.forEach(function (section) {
+      var top = section.offsetTop;
+      var height = section.offsetHeight;
+      var id = section.getAttribute('id');
+      if (scrollY >= top && scrollY < top + height) {
+        navLinks.forEach(function (link) {
+          link.classList.remove('active');
+          if (link.getAttribute('data-section') === id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+
+  // Hamburger + mobile menu
   var menuBtn = document.getElementById('menu-btn');
   var mobileOverlay = document.getElementById('mobile-overlay');
-  var navPill = document.getElementById('nav-pill');
+  var html = document.documentElement;
 
   if (menuBtn && mobileOverlay) {
     menuBtn.addEventListener('click', function () {
       menuBtn.classList.toggle('active');
-      mobileOverlay.classList.toggle('overlay-hidden');
-      html.style.overflow = mobileOverlay.classList.contains('overlay-hidden') ? '' : 'hidden';
+      mobileOverlay.classList.toggle('mobile-overlay--hidden');
+      html.style.overflow = mobileOverlay.classList.contains('mobile-overlay--hidden') ? '' : 'hidden';
     });
+
     mobileOverlay.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         menuBtn.classList.remove('active');
-        mobileOverlay.classList.add('overlay-hidden');
+        mobileOverlay.classList.add('mobile-overlay--hidden');
         html.style.overflow = '';
       });
     });
   }
 
-  /* ========================================
-     NAVBAR SCROLL EFFECT
-  ======================================== */
-  var navPillEl = document.getElementById('nav-pill');
-  if (navPillEl) {
-    lenis.on('scroll', function (e) {
-      if (e.scrollY > 40) {
-        navPillEl.classList.add('scrolled');
-      } else {
-        navPillEl.classList.remove('scrolled');
-      }
-    });
-  }
-
-  /* ========================================
-     SCROLL REVEAL (Intersection Observer)
-  ======================================== */
-  var revealEls = document.querySelectorAll('.reveal, .reveal-hero');
-
-  if (revealEls.length && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    );
-    revealEls.forEach(function (el) { observer.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('visible'); });
-  }
-
-  /* ========================================
-     SKILL BAR ANIMATION (Intersection Observer)
-  ======================================== */
-  var fillBars = document.querySelectorAll('.skill-bar-fill');
-
-  if (fillBars.length && 'IntersectionObserver' in window) {
-    var barObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var w = entry.target.getAttribute('data-width');
-            if (w) { entry.target.style.width = w + '%'; }
-            barObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    fillBars.forEach(function (bar) { barObserver.observe(bar); });
-  } else {
-    fillBars.forEach(function (bar) {
-      var w = bar.getAttribute('data-width');
-      if (w) { bar.style.width = w + '%'; }
-    });
-  }
-
-  /* ========================================
-     INTERACTIVE DOT GRID (cursor-reactive)
-  ======================================== */
-  (function () {
-    var canvas = document.getElementById('dot-grid');
-    if (!canvas) return;
-
-    var ctx = canvas.getContext('2d');
-    var dots = [];
-    var mouse = { x: -9999, y: -9999 };
-    var w, h, dpr;
-
-    var SPACING = 30;
-    var BASE_RADIUS = 1.2;
-    var MAX_RADIUS = 3.5;
-    var INFLUENCE = 130;
-    var JITTER = 3;
-    var LERP = 0.12;
-
-    var isDark = html.classList.contains('dark');
-
-    var themeWatcher = new MutationObserver(function () {
-      isDark = html.classList.contains('dark');
-    });
-    themeWatcher.observe(html, { attributes: true, attributeFilter: ['class'] });
-
-    function resize() {
-      dpr = window.devicePixelRatio || 1;
-      w = window.innerWidth;
-      h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function initDots() {
-      dots = [];
-      var cols = Math.floor(w / SPACING) + 2;
-      var rows = Math.floor(h / SPACING) + 2;
-      for (var r = 0; r < rows; r++) {
-        for (var c = 0; c < cols; c++) {
-          dots.push({
-            x: c * SPACING + (Math.random() - 0.5) * JITTER,
-            y: r * SPACING + (Math.random() - 0.5) * JITTER,
-            cur: BASE_RADIUS,
-            tgt: BASE_RADIUS,
-          });
-        }
-      }
-    }
-
-    function render() {
-      ctx.clearRect(0, 0, w, h);
-
-      var baseAlpha = isDark ? 0.2 : 0.15;
-      var peakAlpha = isDark ? 0.55 : 0.45;
-      var rColor = isDark ? '237' : '27';
-      var gColor = isDark ? '232' : '58';
-      var bColor = isDark ? '224' : '75';
-
-      for (var i = 0; i < dots.length; i++) {
-        var dot = dots[i];
-        var dx = mouse.x - dot.x;
-        var dy = mouse.y - dot.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-
-        var tgt = BASE_RADIUS;
-        var alpha = baseAlpha;
-        if (dist < INFLUENCE) {
-          var t = 1 - dist / INFLUENCE;
-          t = t * t * (3 - 2 * t);
-          tgt = BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * t;
-          alpha = baseAlpha + (peakAlpha - baseAlpha) * t;
-        }
-
-        dot.cur += (tgt - dot.cur) * LERP;
-
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dot.cur, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + rColor + ',' + gColor + ',' + bColor + ',' + alpha + ')';
-        ctx.fill();
-      }
-
-      requestAnimationFrame(render);
-    }
-
-    resize();
-    initDots();
-    render();
-
-    window.addEventListener('resize', function () {
-      resize();
-      initDots();
-    });
-
-    window.addEventListener('mousemove', function (e) {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-
-    window.addEventListener('touchmove', function (e) {
-      var t = e.touches[0];
-      if (t) {
-        mouse.x = t.clientX;
-        mouse.y = t.clientY;
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchend', function () {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    });
-  })();
-
-  /* ========================================
-     STAT COUNTER ANIMATION
-   ======================================== */
+  // ──────────────────────────────────────────────
+  // 5. STAT COUNTER ANIMATION
+  // ──────────────────────────────────────────────
   (function () {
     var statEls = document.querySelectorAll('.stat-num');
     if (!statEls.length || !('IntersectionObserver' in window)) return;
@@ -247,12 +244,16 @@
     function parseStat(text) {
       var floatMatch = text.match(/^(\d+\.\d+)$/);
       if (floatMatch) return { type: 'float', target: parseFloat(floatMatch[1]), decimals: 2 };
+
       var intMatch = text.match(/^(\d+)\+(.*)$/);
       if (intMatch) return { type: 'intPlus', target: parseInt(intMatch[1], 10), suffix: intMatch[2] || '+' };
+
       var ordMatch = text.match(/^(\d+)(st|nd|rd|th)$/);
       if (ordMatch) return { type: 'ordinal', target: parseInt(ordMatch[1], 10), suffix: ordMatch[2] };
+
       var plainInt = text.match(/^(\d+)$/);
       if (plainInt) return { type: 'int', target: parseInt(plainInt[1], 10) };
+
       return { type: 'none' };
     }
 
@@ -264,83 +265,87 @@
       return '';
     }
 
-    var statObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        statObserver.unobserve(entry.target);
-        var el = entry.target;
-        var info = parseStat(el.textContent.trim());
-        if (info.type === 'none') return;
-        var start = null;
-        var duration = 1500;
+    var statObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          statObserver.unobserve(entry.target);
+          var el = entry.target;
+          var info = parseStat(el.textContent.trim());
+          if (info.type === 'none') return;
 
-        function easeOutExpo(t) {
-          return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-        }
+          var start = null;
+          var duration = 1500;
 
-        function step(ts) {
-          if (!start) start = ts;
-          var elapsed = ts - start;
-          var progress = Math.min(elapsed / duration, 1);
-          var eased = easeOutExpo(progress);
-          el.textContent = formatVal(info.target * eased, info);
-          if (progress < 1) requestAnimationFrame(step);
-        }
+          function easeOutExpo(t) {
+            return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+          }
 
-        requestAnimationFrame(step);
-      });
-    }, { threshold: 0.5 });
+          function step(ts) {
+            if (!start) start = ts;
+            var elapsed = ts - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = easeOutExpo(progress);
+            el.textContent = formatVal(info.target * eased, info);
+            if (progress < 1) requestAnimationFrame(step);
+          }
 
-    statEls.forEach(function (el) { statObserver.observe(el); });
-  })();
+          requestAnimationFrame(step);
+        });
+      },
+      { threshold: 0.5 }
+    );
 
-  /* ========================================
-     MAGNETIC BUTTON HOVER
-   ======================================== */
-  (function () {
-    var btns = document.querySelectorAll('.btn-primary, .btn-secondary');
-    if (!btns.length) return;
-
-    btns.forEach(function (btn) {
-      btn.addEventListener('mousemove', function (e) {
-        var rect = btn.getBoundingClientRect();
-        var x = e.clientX - rect.left - rect.width / 2;
-        var y = e.clientY - rect.top - rect.height / 2;
-        var dist = Math.sqrt(x * x + y * y);
-        var maxDist = Math.min(rect.width, rect.height) / 2;
-        var strength = Math.min(dist / maxDist, 1);
-        var pull = 10 * (1 - strength);
-        var angle = Math.atan2(y, x);
-        btn.style.transform = 'translate(' + Math.cos(angle) * pull + 'px, ' + Math.sin(angle) * pull + 'px)';
-      });
-
-      btn.addEventListener('mouseleave', function () {
-        btn.style.transform = '';
-      });
+    statEls.forEach(function (el) {
+      statObserver.observe(el);
     });
   })();
 
-  /* ========================================
-     CARD CURSOR GLOW
-   ======================================== */
+  // ──────────────────────────────────────────────
+  // 6. CUSTOM CURSOR (desktop only)
+  // ──────────────────────────────────────────────
   (function () {
-    var cards = document.querySelectorAll('.db');
-    if (!cards.length) return;
+    if (window.matchMedia('(hover: none)').matches) return;
 
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mq.matches) return;
+    var dot = document.getElementById('cursor-dot');
+    var ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
 
-    cards.forEach(function (el) {
-      var tick = false;
-      el.addEventListener('pointermove', function (e) {
-        if (tick) return;
-        tick = true;
-        requestAnimationFrame(function () {
-          var r = el.getBoundingClientRect();
-          el.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
-          el.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
-          tick = false;
-        });
+    var mouseX = 0, mouseY = 0;
+    var ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      // Direct update for dot
+      dot.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px)';
+      
+      // Interpolated update for trailing ring
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.transform = 'translate(' + ringX + 'px, ' + ringY + 'px)';
+      
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Expand ring on interactive elements
+    var interactives = document.querySelectorAll('a, button, .skill-item, .contact-card, .credential-card');
+    interactives.forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        ring.style.width = '56px';
+        ring.style.height = '56px';
+        ring.style.borderColor = 'var(--accent)';
+        dot.style.opacity = '0.5';
+      });
+      el.addEventListener('mouseleave', function () {
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(0, 240, 255, 0.4)';
+        dot.style.opacity = '1';
       });
     });
   })();
